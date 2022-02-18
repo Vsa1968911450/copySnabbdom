@@ -1,19 +1,21 @@
 {
-  "name": "copysnabbdom",
+  "name": "diff",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Vsa1968911450/copySnabbdom.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Vsa1968911450/copySnabbdom/issues"
+  "dependencies": {
+    "snabbdom": "^3.3.1"
   },
-  "homepage": "https://github.com/Vsa1968911450/copySnabbdom#readme"
+  "devDependencies": {
+    "@webpack-cli/serve": "^1.6.1",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.3"
+  }
 }
