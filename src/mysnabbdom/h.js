@@ -1,27 +1,39 @@
-import vnode from './vnode.js';
-// 简单试着写写 只限于调用到时候是下面三种
-// h('div',{},text)
-//h('div',{},[])
-// h('div',{},h())
-export default function h(sel,data,c){
+import vnode from "./vnode";
+/**
+ * 产生虚拟DOM树 返回的是一个对象
+ * 低配版本的h函数，这个函数必须接受三个参数，缺一不可
+ * @param {*} sel
+ * @param {*} data
+ * @param {*} c
+ * 调用只有三种形态
+ * ① h('div', {}, '文字')
+ * ② h('div', {}, [])
+ * ③ h('div', {}, h())
+ */
+export default function (sel, data, c) {
   // 检查参数个数
-  if(arguments.length !=3) {
-    throw Error('三个参数')
+  if (arguments.length !== 3) {
+    throw new Error("三个参数！");
   }
-  if(typeof c== 'string' || typeof c == 'number'){
-    return vnode(sel,data,undefined,c,undefined)
-  } else if(Array.isArray(c)){
-    console.log('1212我来了')
-    let children = []
-    c.forEach(item=>{
-      if(!(typeof item == 'object' && item.hasOwnProperty('sel'))){
-        throw Error('传入数组有项不是h函数')
+  // 检查参数c的类型
+  if (typeof c === "string" || typeof c === "number") {
+    // 说明现在是 ① h('div', {}, '文字')
+    return vnode(sel, data, undefined, c, undefined);
+  } else if (Array.isArray(c)) {
+    // 说明是 ② h('div', {}, [])
+    let children = [];
+    // 遍历 数组 c
+    for (let item of c) {
+      if (!(typeof item === "object" && item.hasOwnProperty("sel"))) {
+        throw new Error("传入的数组有不是h函数的项");
       }
-      children.push(item)
-    })
-    return vnode(sel,data,children,c,undefined)
-  } else if(typeof c == 'object' && c.hasOwnProperty('sel')){
-    let children = [c]
-    return vnode(sel,data,children,c,undefined)
+      // 不用执行c[i], 调用的时候执行了，只要收集
+      children.push(item);
+    }
+    return vnode(sel, data, children, undefined, undefined);
+  } else if (typeof c === "object" && c.hasOwnProperty("sel")) {
+    // 说明是 ③ h('div', {}, h())
+    let children = [c];
+    return vnode(sel, data, children, undefined, undefined);
   }
 }
